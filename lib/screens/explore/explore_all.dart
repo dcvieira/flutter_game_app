@@ -1,15 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:game_app/shared/category_item.dart';
 import 'package:game_app/shared/custom_filled_field.dart';
+import 'package:game_app/shared/popular_channel_item.dart';
 import 'package:game_app/shared/rounded_label.dart';
 
 class ExploreAll extends StatefulWidget {
+  final Function onPress;
+
+  ExploreAll({@required this.onPress});
+
   @override
   _ExploreAllState createState() => _ExploreAllState();
 }
 
 class _ExploreAllState extends State<ExploreAll> {
   int _currentPage = 0;
+  int _totalPages = 3;
+
+  List<Widget> buildPageIndicator() {
+    List<Widget> list = [];
+    for (var i = 0; i < _totalPages; i++) {
+      list.add(buildIndicator(i == _currentPage));
+    }
+    return list;
+  }
+
+  Widget buildIndicator(bool isActive) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 150),
+      margin: EdgeInsets.symmetric(horizontal: 4),
+      height: 8,
+      width: 8,
+      decoration: BoxDecoration(
+        color: isActive ? Colors.white : Colors.grey[600],
+        shape: BoxShape.circle,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +127,128 @@ class _ExploreAllState extends State<ExploreAll> {
                             "ForeverYoungGaming"),
                       ],
                     ),
-                  )
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: buildPageIndicator(),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Popular channels",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            widget.onPress();
+                          },
+                          child: Text(
+                            "Open All",
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 16, left: 16, right: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: PopularChannelItem(
+                            imageUrl: "assets/images/user_1.jpg",
+                            name: "Sapphiron",
+                            variation: true,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: PopularChannelItem(
+                            imageUrl: "assets/images/user_2.jpg",
+                            name: "Oodin",
+                            variation: true,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: PopularChannelItem(
+                            imageUrl: "assets/images/user_3.jpg",
+                            name: "Metalizer",
+                            variation: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Top Categories",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "Open All",
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 16, right: 16, left: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        CategoryItem(
+                          imageUrl: "assets/images/category_1.jpg",
+                          name: "FPS",
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        CategoryItem(
+                          imageUrl: "assets/images/category_2.jpg",
+                          name: "RPG",
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        CategoryItem(
+                          imageUrl: "assets/images/category_3.jpg",
+                          name: "SPORTS",
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
